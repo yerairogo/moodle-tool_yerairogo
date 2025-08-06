@@ -26,6 +26,8 @@ require_once(__DIR__ . '/../../../config.php');
 
 require_login();
 
+$courseid = optional_param('id', 0, PARAM_INT);
+
 $url = new moodle_url('/admin/tool/yerairogo/index.php');
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url($url);
@@ -33,4 +35,9 @@ $PAGE->set_pagelayout('report');
 $PAGE->set_title('Hello to yerairogo plugin');
 $PAGE->set_heading(get_string('pluginname', 'tool_yerairogo'));
 
-echo get_string('helloworld', 'tool_yerairogo');
+echo $OUTPUT->header();
+
+echo html_writer::tag('h1', get_string('helloworld', 'tool_yerairogo'));
+echo html_writer::div(get_string('courseid', 'tool_yerairogo', $courseid));
+
+echo $OUTPUT->footer();
