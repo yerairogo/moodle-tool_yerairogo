@@ -22,6 +22,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Adds this plugin to the course administration menu
+ * @param navigation_node $parentnode
+ * @param stdClass $course
+ * @param context_course $context
+ * @return void
+ */
 function tool_yerairogo_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
     $parentnode->add(
         get_string('pluginname', 'tool_yerairogo'),
