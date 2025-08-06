@@ -25,7 +25,7 @@
 function tool_yerairogo_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
     $parentnode->add(
         get_string('pluginname', 'tool_yerairogo'),
-        new moodle_url('/admin/tool/yerairogo/index.php', array('id' => $course->id)),
+        new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $course->id]),
         navigation_node::TYPE_SETTING,
         get_string('pluginname', 'tool_yerairogo'),
         'tool_yerairogo',
