@@ -15,17 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for tool_yerairogo
+ * Callback implementations for My first Moodle plugin
  *
  * @package    tool_yerairogo
  * @copyright  2025 Yerai Rodríguez
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->component    = 'tool_yerairogo';
-$plugin->release      = '1.3';
-$plugin->version      = 2025080603;
-$plugin->requires     = 2025041400;
-$plugin->maturity     = MATURITY_STABLE;
+function tool_yerairogo_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
+    $parentnode->add(
+        get_string('pluginname', 'tool_yerairogo'),
+        new moodle_url('/admin/tool/yerairogo/index.php', array('id' => $course->id)),
+        navigation_node::TYPE_SETTING,
+        get_string('pluginname', 'tool_yerairogo'),
+        'tool_yerairogo',
+        new pix_icon('icon', '', 'tool_yerairogo')
+    );
+}

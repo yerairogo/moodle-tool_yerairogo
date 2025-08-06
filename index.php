@@ -26,9 +26,9 @@ require_once(__DIR__ . '/../../../config.php');
 
 require_login();
 
-$courseid = optional_param('id', 0, PARAM_INT);
+$courseid = required_param('id', PARAM_INT);
 
-$url = new moodle_url('/admin/tool/yerairogo/index.php');
+$url = new moodle_url('/admin/tool/yerairogo/index.php', array('id' => $courseid));
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('report');
