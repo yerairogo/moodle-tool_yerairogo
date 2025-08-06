@@ -24,6 +24,8 @@
 
 require_once(__DIR__ . '/../../../config.php');
 
+require_login();
+
 $url = new moodle_url('/admin/tool/yerairogo/index.php');
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url($url);
