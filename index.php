@@ -15,15 +15,20 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * English language pack for tool_yerairogo
+ * TODO describe file index
  *
  * @package    tool_yerairogo
- * @category   string
  * @copyright  2025 Yerai Rodríguez
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once(__DIR__ . '/../../../config.php');
 
-$string['helloworld'] = 'Hello World';
-$string['pluginname'] = 'My first Moodle plugin';
+$url = new moodle_url('/admin/tool/yerairogo/index.php');
+$PAGE->set_context(context_system::instance());
+$PAGE->set_url($url);
+$PAGE->set_pagelayout('report');
+$PAGE->set_title('Hello to yerairogo plugin');
+$PAGE->set_heading(get_string('pluginname', 'tool_yerairogo'));
+
+echo get_string('helloworld', 'tool_yerairogo');
