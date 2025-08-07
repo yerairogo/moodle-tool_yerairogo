@@ -44,14 +44,23 @@ class tool_yerairogo_table extends table_sql {
 
         parent::__construct($uniqueid);
 
-        $this->define_columns(['name', 'completed', 'priority', 'timecreated', 'timemodified']);
-        $this->define_headers([
+        $columns = ['name', 'completed', 'priority', 'timecreated', 'timemodified'];
+        $headers = [
             get_string('name', 'tool_yerairogo'),
             get_string('completed', 'tool_yerairogo'),
             get_string('priority', 'tool_yerairogo'),
             get_string('timecreated', 'tool_yerairogo'),
             get_string('timemodified', 'tool_yerairogo'),
-        ]);
+        ];
+
+        $this->context = context_course::instance($courseid);
+        if (has_capability('tool/yerairogo:edit', $this->context)) {
+            $columns[] = 'edit';
+            $headers[] = '';
+        }
+
+        $this->define_columns($columns);
+        $this->define_headers($headers);
         $this->pageable(true);
         $this->collapsible(false);
         $this->sortable(false);
@@ -59,13 +68,7 @@ class tool_yerairogo_table extends table_sql {
 
         $this->define_baseurl($PAGE->url);
 
-        $this->context = context_course::instance($courseid);
-        $this->set_sql(
-            'name, completed, priority, timecreated, timemodified',
-            '{tool_yerairogo}',
-            'courseid = ?',
-            [$courseid]
-        );
+        $this->set_sql('id, name, completed, priority, timecreated, timemodified', '{tool_yerairogo}', 'courseid = ?', [$courseid]);
     }
 
     /**
@@ -116,6 +119,17 @@ class tool_yerairogo_table extends table_sql {
      */
     protected function col_timemodified($row) {
         return userdate($row->timemodified, get_string('strftimedatetime'));
+    }
+
+    /**
+     * Displays column edit
+     *
+     * @param stdClass $row
+     * @return string
+     */
+    protected function col_edit($row) {
+        $url = new moodle_url('/admin/tool/yerairogo/edit.php', ['id' => $row->id]);
+        return html_writer::link($url, get_string('edit'));
     }
 
 }

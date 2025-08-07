@@ -56,4 +56,10 @@ echo html_writer::div(get_string(
 $table = new tool_yerairogo_table('uniqueid', $courseid);
 $table->out(0, true);
 
+// Display the edit button.
+if (has_capability('tool/yerairogo:edit', $coursecontext)) {
+    $editurl = new moodle_url('/admin/tool/yerairogo/edit.php', ['courseid' => $courseid]);
+    echo html_writer::link($editurl, get_string('newentry', 'tool_yerairogo'), ['class' => 'btn btn-primary']);
+}
+
 echo $OUTPUT->footer();
