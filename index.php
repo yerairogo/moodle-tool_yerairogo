@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * TODO describe file index
+ * Main file
  *
  * @package    tool_yerairogo
  * @copyright  2025 Yerai Rodríguez
@@ -35,9 +35,15 @@ $PAGE->set_pagelayout('report');
 $PAGE->set_title('Hello to yerairogo plugin');
 $PAGE->set_heading(get_string('pluginname', 'tool_yerairogo'));
 
+$userscount = $DB->count_records('user');
+$course = $DB->get_record('course', ['id' => $courseid]);
+
 echo $OUTPUT->header();
 
 echo html_writer::tag('h1', get_string('helloworld', 'tool_yerairogo'));
 echo html_writer::div(get_string('courseid', 'tool_yerairogo', $courseid));
+
+echo html_writer::div(get_string('userscount', 'tool_yerairogo', $userscount));
+echo html_writer::div(get_string('coursename', 'tool_yerairogo', $course->fullname));
 
 echo $OUTPUT->footer();
