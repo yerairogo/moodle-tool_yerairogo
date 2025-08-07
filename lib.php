@@ -30,12 +30,14 @@
  * @return void|null Return null if we don't want to display the node
  */
 function tool_yerairogo_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
-    $parentnode->add(
-        get_string('pluginname', 'tool_yerairogo'),
-        new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $course->id]),
-        navigation_node::TYPE_SETTING,
-        get_string('pluginname', 'tool_yerairogo'),
-        'tool_yerairogo',
-        new pix_icon('icon', '', 'tool_yerairogo')
-    );
+    if (has_capability('tool/yerairogo:view', $context)) {
+        $parentnode->add(
+            get_string('pluginname', 'tool_yerairogo'),
+            new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $course->id]),
+            navigation_node::TYPE_SETTING,
+            get_string('pluginname', 'tool_yerairogo'),
+            'tool_yerairogo',
+            new pix_icon('icon', '', 'tool_yerairogo')
+        );
+    }
 }

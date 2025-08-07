@@ -15,25 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * English language pack for tool_yerairogo
+ * Capability definitions for My first Moodle plugin
+ *
+ * Documentation: {@link https://moodledev.io/docs/apis/subsystems/access}
  *
  * @package    tool_yerairogo
- * @category   string
- * @copyright  2025 Yerai Rodríguez
+ * @category   access
+ * @copyright  2025 Yerai Rodríguez <yerai.rodriguez@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['completed'] = 'Completed';
-$string['courseid'] = 'Course ID: {$a}';
-$string['coursename'] = 'Course full name: {$a}';
-$string['helloworld'] = 'Hello World';
-$string['name'] = 'Name';
-$string['pluginname'] = 'My first Moodle plugin';
-$string['priority'] = 'Priority';
-$string['timecreated'] = 'Time created';
-$string['timemodified'] = 'Time modified';
-$string['userscount'] = 'Users in the database: {$a}';
-$string['yerairogo:edit'] = 'Edit tool_yerairogo data';
-$string['yerairogo:view'] = 'View tool_yerairogo data';
+$capabilities = [
+    'tool/yerairogo:view' => [
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'student' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ],
+    ],
+    'tool/yerairogo:edit' => [
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+        ],
+    ],
+];

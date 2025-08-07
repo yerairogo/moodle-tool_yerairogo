@@ -24,12 +24,14 @@
 
 require_once(__DIR__ . '/../../../config.php');
 
-require_login();
-
 $courseid = required_param('id', PARAM_INT);
+$coursecontext = context_course::instance($courseid);
+
+require_login($courseid);
+require_capability('tool/yerairogo:view', $coursecontext);
 
 $url = new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $courseid]);
-$PAGE->set_context(context_system::instance());
+$PAGE->set_context($coursecontext);
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('report');
 $PAGE->set_title('Hello to yerairogo plugin');
@@ -44,7 +46,11 @@ echo html_writer::tag('h1', get_string('helloworld', 'tool_yerairogo'));
 echo html_writer::div(get_string('courseid', 'tool_yerairogo', $courseid));
 
 echo html_writer::div(get_string('userscount', 'tool_yerairogo', $userscount));
-echo html_writer::div(get_string('coursename', 'tool_yerairogo', $course->fullname));
+echo html_writer::div(get_string(
+    'coursename',
+    'tool_yerairogo',
+    format_string($course->fullname, true, ['context' => $coursecontext])
+));
 
 // Display the table.
 $table = new tool_yerairogo_table('uniqueid', $courseid);
