@@ -28,7 +28,7 @@ require_login();
 
 $courseid = required_param('id', PARAM_INT);
 
-$url = new moodle_url('/admin/tool/yerairogo/index.php', array('id' => $courseid));
+$url = new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $courseid]);
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('report');
