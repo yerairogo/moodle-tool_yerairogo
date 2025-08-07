@@ -46,7 +46,7 @@ echo html_writer::div(get_string('courseid', 'tool_yerairogo', $courseid));
 echo html_writer::div(get_string('userscount', 'tool_yerairogo', $userscount));
 echo html_writer::div(get_string('coursename', 'tool_yerairogo', $course->fullname));
 
-//Display the table.
+// Display the table.
 $table = new tool_yerairogo_table('uniqueid', $courseid);
 $table->out(0, true);
 

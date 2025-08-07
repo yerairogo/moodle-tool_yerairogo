@@ -44,14 +44,14 @@ class tool_yerairogo_table extends table_sql {
 
         parent::__construct($uniqueid);
 
-        $this->define_columns(array('name', 'completed', 'priority', 'timecreated', 'timemodified'));
-        $this->define_headers(array(
+        $this->define_columns(['name', 'completed', 'priority', 'timecreated', 'timemodified']);
+        $this->define_headers([
             get_string('name', 'tool_yerairogo'),
             get_string('completed', 'tool_yerairogo'),
             get_string('priority', 'tool_yerairogo'),
             get_string('timecreated', 'tool_yerairogo'),
             get_string('timemodified', 'tool_yerairogo'),
-        ));
+        ]);
         $this->pageable(true);
         $this->collapsible(false);
         $this->sortable(false);

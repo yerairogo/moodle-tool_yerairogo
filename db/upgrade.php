@@ -61,7 +61,6 @@ function xmldb_tool_yerairogo_upgrade($oldversion) {
     }
 
     if ($oldversion < 2025080702) {
-
         // Define key courseid (foreign) to be added to tool_yerairogo.
         $table = new xmldb_table('tool_yerairogo');
         $key = new xmldb_key('courseid', XMLDB_KEY_FOREIGN, ['courseid'], 'course', ['id']);
