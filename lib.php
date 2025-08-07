@@ -24,10 +24,10 @@
 
 /**
  * Adds this plugin to the course administration menu
- * @param navigation_node $parentnode
- * @param stdClass $course
- * @param context_course $context
- * @return void
+ * @param navigation_node $parentnode The extended navigation node
+ * @param stdClass $course The course object
+ * @param context_course $context The context of the course
+ * @return void|null Return null if we don't want to display the node
  */
 function tool_yerairogo_extend_navigation_course(navigation_node $parentnode, stdClass $course, context_course $context) {
     $parentnode->add(
