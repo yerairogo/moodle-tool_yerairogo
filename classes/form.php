@@ -34,7 +34,7 @@ class tool_yerairogo_form extends moodleform {
         $mform = $this->_form;
 
         $mform->addElement('text', 'name', get_string('name', 'tool_yerairogo'));
-        $mform->setType('name', PARAM_TEXT);
+        $mform->setType('name', PARAM_NOTAGS);
 
         $mform->addElement('advcheckbox', 'completed', get_string('completed', 'tool_yerairogo'));
 

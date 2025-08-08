@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * TODO describe file edit
+ * Inserts new entry or edits existing one
  *
  * @package    tool_yerairogo
  * @copyright  2025 Yerai Rodríguez <yerai.rodriguez@moodle.com>

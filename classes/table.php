@@ -18,10 +18,6 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/tablelib.php');
 
-use table_sql;
-use context_course;
-use stdClass;
-
 /**
  * Class table
  *
@@ -128,8 +124,13 @@ class tool_yerairogo_table extends table_sql {
      * @return string
      */
     protected function col_edit($row) {
-        $url = new moodle_url('/admin/tool/yerairogo/edit.php', ['id' => $row->id]);
-        return html_writer::link($url, get_string('edit'));
+        $editurl = new moodle_url('/admin/tool/yerairogo/edit.php', ['id' => $row->id]);
+        $deleteurl = new moodle_url('/admin/tool/yerairogo/delete.php', ['id' => $row->id, 'sesskey' => sesskey()]);
+        $output = html_writer::link($editurl,
+            get_string('edit') . '<br>',
+            ['title' => get_string('editentrytitle', 'tool_yerairogo', format_string($row->name))]);
+        $output .= html_writer::link($deleteurl, get_string('delete'));
+        return $output;
     }
 
 }
