@@ -66,7 +66,8 @@ class tool_yerairogo_table extends table_sql {
 
         $this->define_baseurl($PAGE->url);
 
-        $this->set_sql('id, description, descriptionformat, name, completed, priority, timecreated, timemodified', '{tool_yerairogo}', 'courseid = ?', [$courseid]);
+        $this->set_sql('id, description, descriptionformat, name, completed, priority, timecreated, timemodified',
+        '{tool_yerairogo}', 'courseid = ?', [$courseid]);
     }
 
     /**

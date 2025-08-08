@@ -63,7 +63,8 @@ class actions {
 
         if (!empty($data->description_editor)) {
             $context = context_course::instance($data->courseid);
-            $data = file_postupdate_standard_editor($data, 'description', self::editor_options(), $context, 'tool_yerairogo', 'entry', $entryid);
+            $data = file_postupdate_standard_editor($data, 'description', self::editor_options(),
+            $context, 'tool_yerairogo', 'entry', $entryid);
             $updatedata = ['id' => $entryid, 'description' => $data->description, 'descriptionformat' => $data->descriptionformat];
             $DB->update_record('tool_yerairogo', $updatedata);
         }
@@ -86,7 +87,8 @@ class actions {
 
         if (!empty($data->description_editor)) {
             $options = self::editor_options();
-            $editordata = file_postupdate_standard_editor($data, 'description', self::editor_options(), $options['context'], 'tool_yerairogo', 'entry', $data->id);
+            $editordata = file_postupdate_standard_editor($data, 'description', self::editor_options(),
+            $options['context'], 'tool_yerairogo', 'entry', $data->id);
             $data->description = $editordata->description;
             $data->descriptionformat = $editordata->descriptionformat;
         }
