@@ -55,6 +55,7 @@ class tool_yerairogo_table extends table_sql {
             $headers[] = '';
         }
 
+        $this->set_attribute('id', 'tool_yerairogo_overview');
         $this->define_columns($columns);
         $this->define_headers($headers);
         $this->pageable(true);
