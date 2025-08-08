@@ -28,7 +28,7 @@ $id = optional_param('id', 0, PARAM_INT);
 
 // We're editing an existing entry.
 if ($id) {
-    $entry = $DB->get_record('tool_yerairogo', ['id' => $id], '*', MUST_EXIST);
+    $entry = tool_yerairogo\actions::get($id, 0, MUST_EXIST);
     $courseid = $entry->courseid;
     $params = ['id' => $id];
     $title = get_string('editentry', 'tool_yerairogo');
@@ -58,21 +58,9 @@ if ($form->is_cancelled()) {
     redirect($returnurl);
 } else if ($data = $form->get_data()) {
     if ($data->id) {
-        $DB->update_record('tool_yerairogo', [
-            'id' => $data->id,
-            'name' => $data->name,
-            'completed' => $data->completed,
-            'timemodified' => time(),
-        ]);
+        tool_yerairogo\actions::update($data);
     } else {
-        $DB->insert_record('tool_yerairogo', [
-            'courseid' => $data->courseid,
-            'name' => $data->name,
-            'completed' => $data->completed,
-            'priority' => 0,
-            'timecreated' => time(),
-            'timemodified' => time(),
-        ]);
+        tool_yerairogo\actions::insert($data);
     }
 
     redirect($returnurl);

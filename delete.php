@@ -27,7 +27,7 @@ require('../../../config.php');
 $id = required_param('id', PARAM_INT);
 require_sesskey();
 
-$entry = $DB->get_record('tool_yerairogo', ['id' => $id], '*', MUST_EXIST);
+$entry = tool_yerairogo\actions::get($id, 0, MUST_EXIST);
 $courseid = $entry->courseid;
 $params = ['id' => $id];
 $contextcourse = context_course::instance($courseid);
@@ -40,5 +40,5 @@ $returnurl = new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $coursei
 $PAGE->set_url($url);
 $PAGE->set_context($contextcourse);
 
-$DB->delete_records('tool_yerairogo', ['id' => $id]);
+tool_yerairogo\actions::delete($id);
 redirect($returnurl, get_string('entrydeleted', 'tool_yerairogo'), null, \core\output\notification::NOTIFY_SUCCESS);

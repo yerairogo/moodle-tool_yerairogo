@@ -26,19 +26,17 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['completed'] = 'Completed';
-$string['courseid'] = 'Course ID: {$a}';
-$string['coursename'] = 'Course full name: {$a}';
+$string['coursename'] = 'Course: {$a}';
 $string['editentry'] = 'Edit entry';
 $string['editentrytitle'] = 'Edit entry {$a}';
 $string['entrydeleted'] = 'Entry deleted successfully';
 $string['errornameexists'] = 'Name must be unique';
-$string['helloworld'] = 'Hello World';
 $string['name'] = 'Name';
 $string['newentry'] = 'Add entry';
 $string['pluginname'] = 'My first Moodle plugin';
 $string['priority'] = 'Priority';
 $string['timecreated'] = 'Time created';
 $string['timemodified'] = 'Time modified';
-$string['userscount'] = 'Users in the database: {$a}';
+$string['title'] = 'Yerairogo';
 $string['yerairogo:edit'] = 'Edit tool_yerairogo data';
 $string['yerairogo:view'] = 'View tool_yerairogo data';
