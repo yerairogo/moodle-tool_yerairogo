@@ -41,3 +41,45 @@ function tool_yerairogo_extend_navigation_course(navigation_node $parentnode, st
         );
     }
 }
+
+/**
+ * Checks appropiate access and permissions before serving a file.
+ * @param stdClass $course the course object
+ * @param stdClass $cm the course module object
+ * @param context $context the context
+ * @param string $filearea the name of the file area
+ * @param array $args extra arguments (itemid, path)
+ * @param bool $forcedownload whether or not force download
+ * @param array $options additional options affecting the file serving
+ * @return bool false if the file not found, just send the file otherwise and do not return anything
+ */
+function tool_yerairogo_pluginfile(    $course,
+    $cm,
+    $context,
+    string $filearea,
+    array $args,
+    bool $forcedownload,
+    array $options
+    ): bool {
+    if ($context->contextlevel != CONTEXT_MODULE) {
+        return false;
+    }
+
+    if ($filearea != 'entry') {
+        return false;
+    }
+
+    require_login($course);
+    require_capability('tool/yerairogo:edit', $context);
+
+    $itemid = array_shift($args);
+    $filename = array_pop($args);
+    $filepath = (!$args) ? '/' : '/' . implode('/', $args) . '/';
+
+    $fs = get_file_storage();
+    if (!$file = $fs->get_file($context->id, 'tool_yerairogo', $filearea, $itemid, $filepath, $filename)) {
+        return false;
+    }
+
+    send_stored_file($file, null, 0, $forcedownload, $options);
+}

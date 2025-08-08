@@ -40,9 +40,10 @@ class tool_yerairogo_table extends table_sql {
 
         parent::__construct($uniqueid);
 
-        $columns = ['name', 'completed', 'priority', 'timecreated', 'timemodified'];
+        $columns = ['name', 'description', 'completed', 'priority', 'timecreated', 'timemodified'];
         $headers = [
             get_string('name', 'tool_yerairogo'),
+            get_string('description', 'tool_yerairogo'),
             get_string('completed', 'tool_yerairogo'),
             get_string('priority', 'tool_yerairogo'),
             get_string('timecreated', 'tool_yerairogo'),
@@ -65,7 +66,30 @@ class tool_yerairogo_table extends table_sql {
 
         $this->define_baseurl($PAGE->url);
 
-        $this->set_sql('id, name, completed, priority, timecreated, timemodified', '{tool_yerairogo}', 'courseid = ?', [$courseid]);
+        $this->set_sql('id, description, descriptionformat, name, completed, priority, timecreated, timemodified', '{tool_yerairogo}', 'courseid = ?', [$courseid]);
+    }
+
+    /**
+     * Displays column name
+     *
+     * @param stdClass $row
+     * @return string
+     */
+    protected function col_name($row) {
+        return format_string($row->name, true, ['context' => $this->context]);
+    }
+
+    /**
+     * Displays columns description
+     * @param mixed $row
+     * @return string
+     */
+    protected function col_description($row) {
+        global $PAGE;
+        $options = tool_yerairogo\actions::editor_options();
+        $description = file_rewrite_pluginfile_urls($row->description, 'pluginfile.php', $PAGE->context->id, 'tool_yerairogo',
+        'entry', $row->id);
+        return format_text($description, $row->descriptionformat, $options);
     }
 
     /**
@@ -86,16 +110,6 @@ class tool_yerairogo_table extends table_sql {
      */
     protected function col_priority($row) {
         return $row->priority ? get_string('yes') : get_string('no');
-    }
-
-    /**
-     * Displays column name
-     *
-     * @param stdClass $row
-     * @return string
-     */
-    protected function col_name($row) {
-        return format_string($row->name, true, ['context' => $this->context]);
     }
 
     /**

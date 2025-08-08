@@ -48,10 +48,12 @@ final class actions_test extends advanced_testcase {
             'name' => 'Test entry',
             'completed' => 0,
             'priority' => 0,
+            'description' => 'Entry description',
         ]);
         $entry = actions::get($entryid);
         $this->assertEquals($course->id, $entry->courseid);
         $this->assertEquals('Test entry', $entry->name);
+        $this->assertEquals('Entry description', $entry->description);
     }
 
     /**
@@ -64,14 +66,17 @@ final class actions_test extends advanced_testcase {
         $entryid = actions::insert((object) [
             'courseid'  => $course->id,
             'name' => 'Test entry',
+            'description' => 'Entry description',
         ]);
         actions::update((object) [
             'id' => $entryid,
             'name' => 'Updated entry',
+            'description' => 'Updated description',
         ]);
         $entry = actions::get($entryid);
         $this->assertEquals($course->id, $entry->courseid);
         $this->assertEquals('Updated entry', $entry->name);
+        $this->assertEquals('Updated description', $entry->description);
     }
 
     /**
@@ -88,6 +93,45 @@ final class actions_test extends advanced_testcase {
         actions::delete($entryid);
         $entry = actions::get($entryid, 0, IGNORE_MISSING);
         $this->assertEmpty($entry);
+    }
+
+    /**
+     * Test description editor
+     *
+     * @covers \tool_yerairogo\actions::insert
+     * @covers \tool_yerairogo\actions::update
+     * @covers \tool_yerairogo\actions::get
+     */
+    public function test_description_editor(): void {
+        $this->setAdminUser();
+        $course = $this->getDataGenerator()->create_course();
+        $entryid = actions::insert((object) [
+         'courseid' => $course->id,
+         'name' => 'Test entry 1',
+         'description_editor' => [
+             'text' => 'Description in HTML',
+             'format' => FORMAT_HTML,
+             'itemid' => file_get_unused_draft_itemid(),
+         ],
+        ]);
+        $entry = actions::get($entryid);
+        $this->assertEquals('Description in HTML', $entry->description);
+
+        actions::update((object) [
+         'id' => $entryid,
+         'name' => 'Test entry 2',
+         'description_editor' => [
+             'text' => 'Updated description',
+             'format' => FORMAT_HTML,
+             'itemid' => file_get_unused_draft_itemid(),
+         ],
+        ]);
+        $entry = actions::get($entryid);
+
+        $this->assertEquals($course->id, $entry->courseid);
+        $this->assertEquals('Test entry 2', $entry->name);
+        $this->assertEquals('Updated description', $entry->description);
+
     }
 
 }

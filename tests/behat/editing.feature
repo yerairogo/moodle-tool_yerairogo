@@ -22,12 +22,13 @@ Feature: Creating, editing and deleting an entry
     When I navigate to "My first Moodle plugin" in current page administration
     And I follow "Add entry"
     And I set the following fields to these values:
-      | Name      | Test Entry |
-      | Completed | 1          |
+      | Name        | Test Entry        |
+      | Completed   | 1                 |
+      | Description | Entry Description |
     And I press "Save changes"
     Then the following should exist in the "tool_yerairogo_overview" table:
-      | Name       | Completed |
-      | Test Entry | Yes       |
+      | Name       | Completed | Description       |
+      | Test Entry | Yes       | Entry Description |
 
   @javascript
   Scenario: Edit an existing entry
@@ -35,17 +36,19 @@ Feature: Creating, editing and deleting an entry
     When I navigate to "My first Moodle plugin" in current page administration
     And I follow "Add entry"
     And I set the following fields to these values:
-      | Name      | Test Entry |
-      | Completed | 0          |
+      | Name        | Test Entry        |
+      | Completed   | 0                 |
+      | Description | Entry Description |
     And I press "Save changes"
     And I click on "Edit" "link" in the "Test Entry" "table_row"
     And I set the following fields to these values:
-      | Name      | Updated Entry |
-      | Completed | 1             |
+      | Name        | Updated Entry       |
+      | Completed   | 1                   |
+      | Description | Updated Description |
     And I press "Save changes"
     Then the following should exist in the "tool_yerairogo_overview" table:
-      | Name          | Completed |
-      | Updated Entry | Yes       |
+      | Name          | Completed | Description         |
+      | Updated Entry | Yes       | Updated Description |
 
   @javascript
   Scenario: Delete an entry
@@ -53,8 +56,9 @@ Feature: Creating, editing and deleting an entry
     When I navigate to "My first Moodle plugin" in current page administration
     And I follow "Add entry"
     And I set the following fields to these values:
-      | Name      | Test Entry |
-      | Completed | 1          |
+      | Name        | Test Entry        |
+      | Completed   | 1                 |
+      | Description | Entry Description |
     And I press "Save changes"
     And I click on "Delete" "link" in the "Test Entry" "table_row"
     Then I should not see "Test Entry"

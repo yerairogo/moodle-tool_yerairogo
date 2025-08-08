@@ -38,6 +38,8 @@ class tool_yerairogo_form extends moodleform {
 
         $mform->addElement('advcheckbox', 'completed', get_string('completed', 'tool_yerairogo'));
 
+        $mform->addElement('editor', 'description_editor', get_string('description', 'tool_yerairogo'));
+
         $mform->addElement('hidden', 'courseid');
         $mform->setType('courseid', PARAM_INT);
 

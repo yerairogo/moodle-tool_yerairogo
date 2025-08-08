@@ -52,6 +52,10 @@ $PAGE->set_context($coursecontext);
 $PAGE->set_heading($SITE->fullname);
 
 $form = new tool_yerairogo_form();
+if (!empty($entry->id)) {
+    file_prepare_standard_editor($entry, 'description', tool_yerairogo\actions::editor_options(),
+    $coursecontext, 'tool_yerairogo', 'entry', $entry->id);
+}
 $form->set_data($entry);
 
 if ($form->is_cancelled()) {

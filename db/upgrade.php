@@ -79,5 +79,27 @@ function xmldb_tool_yerairogo_upgrade($oldversion) {
         upgrade_plugin_savepoint(true, 2025080702, 'tool', 'yerairogo');
     }
 
+    if ($oldversion < 2025080803) {
+
+        // Define field description to be added to tool_yerairogo.
+        $table = new xmldb_table('tool_yerairogo');
+        $field = new xmldb_field('description', XMLDB_TYPE_TEXT, null, null, null, null, null, 'timemodified');
+
+        // Conditionally launch add field description.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('descriptionformat', XMLDB_TYPE_INTEGER, '10', null, null, null, null, 'description');
+
+        // Conditionally launch add field descriptionformat.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Yerairogo savepoint reached.
+        upgrade_plugin_savepoint(true, 2025080803, 'tool', 'yerairogo');
+    }
+
     return true;
 }

@@ -16,6 +16,7 @@
 
 namespace tool_yerairogo;
 
+use context_course;
 use core\exception\coding_exception;
 use stdClass;
 
@@ -51,12 +52,23 @@ class actions {
      */
     public static function insert(stdClass $data): int {
         global $DB;
+
         if (empty($data->courseid)) {
             throw new coding_exception('Object data must contain property courseid');
         }
+
         $data->timecreated = time();
         $data->timemodified = $data->timecreated;
-        return $DB->insert_record('tool_yerairogo', $data);
+        $entryid = $DB->insert_record('tool_yerairogo', $data);
+
+        if (!empty($data->description_editor)) {
+            $context = context_course::instance($data->courseid);
+            $data = file_postupdate_standard_editor($data, 'description', self::editor_options(), $context, 'tool_yerairogo', 'entry', $entryid);
+            $updatedata = ['id' => $entryid, 'description' => $data->description, 'descriptionformat' => $data->descriptionformat];
+            $DB->update_record('tool_yerairogo', $updatedata);
+        }
+
+        return $entryid;
     }
 
     /**
@@ -65,10 +77,20 @@ class actions {
      */
     public static function update(stdClass $data): void {
         global $DB;
+
         if (empty($data->id)) {
             throw new coding_exception('Object data must contain property id');
         }
+
         $data->timemodified = time();
+
+        if (!empty($data->description_editor)) {
+            $options = self::editor_options();
+            $editordata = file_postupdate_standard_editor($data, 'description', self::editor_options(), $options['context'], 'tool_yerairogo', 'entry', $data->id);
+            $data->description = $editordata->description;
+            $data->descriptionformat = $editordata->descriptionformat;
+        }
+
         $DB->update_record('tool_yerairogo', $data);
     }
 
@@ -79,6 +101,17 @@ class actions {
     public static function delete(int $id): void {
         global $DB;
         $DB->delete_records("tool_yerairogo", ['id' => $id]);
+    }
+
+    /**
+     * Options for the description editor
+     * @return array
+     */
+    public static function editor_options() {
+        global $PAGE;
+        return [
+            'context' => $PAGE->context,
+        ];
     }
 
 }
