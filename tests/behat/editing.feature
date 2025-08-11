@@ -62,7 +62,7 @@ Feature: Creating, editing and deleting an entry
     And I click on "Delete" "link" in the "Test Entry" "table_row"
     Then I should not see "Test Entry"
 
-@javascript
+  @javascript
   Scenario: Delete an entry with Javascript
     Given I am on "Course 1" course homepage
     When I navigate to "My first Moodle plugin" in current page administration
