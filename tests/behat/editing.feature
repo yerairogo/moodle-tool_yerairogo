@@ -61,4 +61,5 @@ Feature: Creating, editing and deleting an entry
       | Description | Entry Description |
     And I press "Save changes"
     And I click on "Delete" "link" in the "Test Entry" "table_row"
+    And I press "Yes"
     Then I should not see "Test Entry"
