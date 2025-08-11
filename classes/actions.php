@@ -143,10 +143,10 @@ class actions {
     }
 
     /**
-     * Delete entries when course content is deleted
-     * @param \core\event\course_content_deleted $event
+     * Delete entries when course is deleted
+     * @param \core\event\course_deleted $event
      */
-    public static function course_deleted_observer(\core\event\course_deleted $event) {
+    public static function course_deleted_observer(\core\event\course_deleted $event): void {
         global $DB;
         $DB->delete_records('tool_yerairogo', ['courseid' => $event->objectid]);
     }
