@@ -50,8 +50,20 @@ Feature: Creating, editing and deleting an entry
       | Name          | Completed | Description         |
       | Updated Entry | Yes       | Updated Description |
 
-  @javascript
-  Scenario: Delete an entry
+  Scenario: Delete an entry without Javascript
+    Given I am on "Course 1" course homepage
+    When I navigate to "My first Moodle plugin" in current page administration
+    And I follow "Add entry"
+    And I set the following fields to these values:
+      | Name        | Test Entry        |
+      | Completed   | 1                 |
+      | Description | Entry Description |
+    And I press "Save changes"
+    And I click on "Delete" "link" in the "Test Entry" "table_row"
+    Then I should not see "Test Entry"
+
+@javascript
+  Scenario: Delete an entry with Javascript
     Given I am on "Course 1" course homepage
     When I navigate to "My first Moodle plugin" in current page administration
     And I follow "Add entry"

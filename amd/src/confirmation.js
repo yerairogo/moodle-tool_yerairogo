@@ -21,10 +21,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import * as str from "core/str";
+import * as str from 'core/str';
 import * as notification from 'core/notification';
+import * as templates from 'core/templates';
+import * as ajax from 'core/ajax';
 
-export const confirmDeletion = (url) => {
+/**
+ * Displays the confirmation to delete the entry
+ *
+ * @method confirmDeletion
+ * @param {Number} id
+ * @param {Object} entriesList
+ */
+export const confirmDeletion = (id, entriesList) => {
     str.get_strings([
             {key: 'delete'},
             {key: 'confirmdeletion', component: 'tool_yerairogo'},
@@ -33,24 +42,71 @@ export const confirmDeletion = (url) => {
         ])
         .done(function(strings) {
             notification.confirm(strings[0], strings[1], strings[2], strings[3], function() {
-                window.location.href = url;
+                processDelete(id, entriesList);
             });
         })
         .fail(notification.exception);
 };
 
+/**
+ * Calls the services to delete the entry and retrieve the entries list
+ *
+ * @method processDelete
+ * @param {Number} id
+ * @param {Object} entriesList
+ */
+export const processDelete = (id, entriesList) => {
+    const courseid = entriesList.dataset.courseid;
+    const requests = ajax.call([{
+        methodname: 'tool_yerairogo_delete_entry',
+        args: {id: id}
+    }, {
+        methodname: 'tool_yerairogo_list_entries',
+        args: {courseid: courseid}
+    }]);
+    requests[1].done(function(data) {
+        loadList(data, entriesList);
+    }).fail(notification.exception);
+};
+
+/**
+ * Loads and renders the entries list
+ *
+ * @method loadList
+ * @param {Object} data
+ * @param {Object} entriesList
+ */
+export const loadList = (data, entriesList) => {
+    templates.render('tool_yerairogo/entries_list', data).done(function(html, js) {
+        templates.replaceNodeContents(entriesList, html, js);
+    });
+};
+
+/**
+ * Binds click event to the selector
+ *
+ * @method onClickHandler
+ * @param {String} selector
+ */
 export const onClickHandler = (selector) => {
     const items = document.querySelectorAll(selector);
 
     items.forEach((item) => {
         item.addEventListener("click", (e) => {
             e.preventDefault();
-            const href = item.getAttribute("href");
-            confirmDeletion(href);
+            const id = item.dataset.entryid;
+            const entriesList = item.closest('.entries_list');
+            confirmDeletion(id, entriesList);
         });
     });
 };
 
+/**
+ * Initialises the confirmation to delete the entry
+ *
+ * @method init
+ * @param {String} selector
+ */
 export const init = (selector) => {
     onClickHandler(selector);
 };

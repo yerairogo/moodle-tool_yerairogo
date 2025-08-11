@@ -46,26 +46,26 @@ class entries_list implements templatable, renderable {
     /**
      * Exports entries list data to a templatable interface
      * @param \core\output\renderer_base $output
-     * @return stdClass
+     * @return array
      */
-    public function export_for_template(\core\output\renderer_base $output): stdClass {
+    public function export_for_template(\core\output\renderer_base $output): array {
         $course = get_course($this->courseid);
         $context = context_course::instance($this->courseid);
 
-        $data = new stdClass();
-        $data->courseid = $course->id;
-        $data->coursename = format_string($course->fullname, true, ['context' => $context]);
+        $data = [];
+        $data['courseid'] = $course->id;
+        $data['coursename'] = format_string($course->fullname, true, ['context' => $context]);
 
         // Display the table.
         ob_start();
         $table = new tool_yerairogo_table('uniqueid', $this->courseid);
         $table->out(0, true);
-        $data->entriestable = ob_get_clean();
+        $data['entriestable'] = ob_get_clean();
 
         // Display the add button.
         if (has_capability('tool/yerairogo:edit', $context)) {
             $editurl = new moodle_url('/admin/tool/yerairogo/edit.php', ['courseid' => $this->courseid]);
-            $data->editurl = $editurl->out(false);
+            $data['editurl'] = $editurl->out(false);
         }
 
         return $data;

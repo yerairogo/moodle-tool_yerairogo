@@ -15,30 +15,33 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Deletes an existing entry
+ * External functions and service declaration for My first Moodle plugin
+ *
+ * Documentation: {@link https://moodledev.io/docs/apis/subsystems/external/description}
  *
  * @package    tool_yerairogo
+ * @category   webservice
  * @copyright  2025 Yerai Rodríguez <yerai.rodriguez@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require('../../../config.php');
+defined('MOODLE_INTERNAL') || die();
 
-$id = required_param('id', PARAM_INT);
-require_sesskey();
-
-$entry = tool_yerairogo\actions::get($id, 0, MUST_EXIST);
-$courseid = $entry->courseid;
-$params = ['id' => $id];
-$contextcourse = context_course::instance($courseid);
-
-require_login($courseid);
-require_capability('tool/yerairogo:edit', $contextcourse);
-
-$url = new moodle_url('/admin/tool/yerairogo/delete.php', $params);
-$returnurl = new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $courseid]);
-$PAGE->set_url($url);
-$PAGE->set_context($contextcourse);
-
-tool_yerairogo\actions::delete($id);
-redirect($returnurl);
+$functions = [
+    'tool_yerairogo_delete_entry' => [
+        'classname' => \tool_yerairogo\external::class,
+        'methodname' => 'delete_entry',
+        'description' => 'Delete entry',
+        'type' => 'write',
+        'ajax' => true,
+        'capabilities' => 'tool/yerairogo:edit',
+    ],
+     'tool_yerairogo_list_entries' => [
+        'classname' => \tool_yerairogo\external::class,
+        'methodname' => 'list_entries',
+        'description' => 'List entries',
+        'type' => 'read',
+        'ajax' => true,
+        'capabilities' => 'tool/yerairogo:view',
+    ],
+];
