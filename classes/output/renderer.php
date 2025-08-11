@@ -14,18 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace tool_yerairogo\output;
+
+use plugin_renderer_base;
+use tool_yerairogo\output\entries_list;
+
 /**
- * Version information for tool_yerairogo
+ * Class renderer
  *
  * @package    tool_yerairogo
- * @copyright  2025 Yerai Rodríguez
+ * @copyright  2025 Yerai Rodríguez <yerai.rodriguez@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+class renderer extends plugin_renderer_base {
 
-defined('MOODLE_INTERNAL') || die();
+    /**
+     * Renders the list of entries
+     * @param \tool_yerairogo\output\entries_list $entries
+     * @return bool|string
+     */
+    protected function render_entries_list(entries_list $list) {
+        $data = $list->export_for_template($this);
+        return $this->render_from_template('tool_yerairogo/entries_list', $data);
+    }
 
-$plugin->component = 'tool_yerairogo';
-$plugin->release = '2.2';
-$plugin->version = 2025081100;
-$plugin->requires = 2018050800;
-$plugin->maturity = MATURITY_STABLE;
+}
