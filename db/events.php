@@ -15,17 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for tool_yerairogo
+ * Event observers for My first Moodle plugin
  *
  * @package    tool_yerairogo
- * @copyright  2025 Yerai Rodríguez
+ * @category   event
+ * @copyright  2025 Yerai Rodríguez <yerai.rodriguez@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'tool_yerairogo';
-$plugin->release = '2.4';
-$plugin->version = 2025081102;
-$plugin->requires = 2018050800;
-$plugin->maturity = MATURITY_STABLE;
+$observers = [
+    [
+        'eventname' => 'core\event\course_deleted',
+        'callback' => 'tool_yerairogo\actions::course_deleted_observer',
+    ],
+];

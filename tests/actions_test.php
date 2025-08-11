@@ -18,7 +18,7 @@ namespace tool_yerairogo;
 use advanced_testcase;
 
 /**
- * Tests for My first Moodle plugin
+ * Tests for the class actions of tool_yerairogo plugin
  *
  * @package    tool_yerairogo
  * @category   test
@@ -31,8 +31,8 @@ final class actions_test extends advanced_testcase {
      * Reset the database before each execution.
      */
     public function setUp(): void {
-        $this->resetAfterTest();
         parent::setUp();
+        $this->resetAfterTest();
     }
 
     /**

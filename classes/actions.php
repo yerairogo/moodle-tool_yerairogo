@@ -57,17 +57,24 @@ class actions {
             throw new coding_exception('Object data must contain property courseid');
         }
 
+        $context = context_course::instance($data->courseid);
         $data->timecreated = time();
         $data->timemodified = $data->timecreated;
         $entryid = $DB->insert_record('tool_yerairogo', $data);
 
         if (!empty($data->description_editor)) {
-            $context = context_course::instance($data->courseid);
             $data = file_postupdate_standard_editor($data, 'description', self::editor_options(),
             $context, 'tool_yerairogo', 'entry', $entryid);
             $updatedata = ['id' => $entryid, 'description' => $data->description, 'descriptionformat' => $data->descriptionformat];
             $DB->update_record('tool_yerairogo', $updatedata);
         }
+
+        // Trigger event.
+        $event = \tool_yerairogo\event\entry_created::create([
+            'context' => $context,
+            'objectid' => $entryid,
+        ]);
+        $event->trigger();
 
         return $entryid;
     }
@@ -94,6 +101,14 @@ class actions {
         }
 
         $DB->update_record('tool_yerairogo', $data);
+
+        // Trigger event.
+        $entry = self::get($data->id);
+        $event = \tool_yerairogo\event\entry_updated::create([
+            'context' => context_course::instance($entry->courseid),
+            'objectid' => $entry->id,
+        ]);
+        $event->trigger();
     }
 
     /**
@@ -102,7 +117,18 @@ class actions {
      */
     public static function delete(int $id): void {
         global $DB;
+        if (!$entry = self::get($id, 0, IGNORE_MISSING)) {
+            return;
+        }
         $DB->delete_records("tool_yerairogo", ['id' => $id]);
+
+        // Trigger event.
+        $event = \tool_yerairogo\event\entry_deleted::create([
+            'context' => context_course::instance($entry->courseid),
+            'objectid' => $entry->id,
+        ]);
+        $event->add_record_snapshot('tool_yerairogo', $entry);
+        $event->trigger();
     }
 
     /**
@@ -114,6 +140,15 @@ class actions {
         return [
             'context' => $PAGE->context,
         ];
+    }
+
+    /**
+     * Delete entries when course content is deleted
+     * @param \core\event\course_content_deleted $event
+     */
+    public static function course_deleted_observer(\core\event\course_deleted $event) {
+        global $DB;
+        $DB->delete_records('tool_yerairogo', ['courseid' => $event->objectid]);
     }
 
 }
