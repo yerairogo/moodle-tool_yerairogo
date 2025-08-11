@@ -26,6 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['completed'] = 'Completed';
+$string['confirmdeletion'] = 'Are you sure you want to delete this entry?';
 $string['coursename'] = 'Course: {$a}';
 $string['description'] = 'Description';
 $string['editentry'] = 'Edit entry';

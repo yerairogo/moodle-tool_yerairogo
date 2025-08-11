@@ -38,3 +38,7 @@
         <button class="btn btn-primary">{{#str}} newentry, tool_yerairogo {{/str}}</button>
     </a>
 {{/editurl}}
+
+{{#js}}
+    require(['tool_yerairogo/confirmation'], (confirmation) => confirmation.init('[data-action=deleteentry]'))
+{{/js}}

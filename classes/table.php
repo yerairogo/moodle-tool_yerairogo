@@ -145,7 +145,7 @@ class tool_yerairogo_table extends table_sql {
         $output = html_writer::link($editurl,
             get_string('edit') . '<br>',
             ['title' => get_string('editentrytitle', 'tool_yerairogo', format_string($row->name))]);
-        $output .= html_writer::link($deleteurl, get_string('delete'));
+        $output .= html_writer::link($deleteurl, get_string('delete'), ['data-action' => 'deleteentry']);
         return $output;
     }
 
