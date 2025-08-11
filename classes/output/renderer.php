@@ -30,8 +30,8 @@ class renderer extends plugin_renderer_base {
 
     /**
      * Renders the list of entries
-     * @param \tool_yerairogo\output\entries_list $entries
-     * @return bool|string
+     * @param \tool_yerairogo\output\entries_list $list
+     * @return string
      */
     protected function render_entries_list(entries_list $list) {
         $data = $list->export_for_template($this);

@@ -46,7 +46,7 @@ class entries_list implements templatable, renderable {
     /**
      * Exports entries list data to a templatable interface
      * @param \core\output\renderer_base $output
-     * @return array
+     * @return stdClass
      */
     public function export_for_template(\core\output\renderer_base $output): stdClass {
         $course = get_course($this->courseid);
