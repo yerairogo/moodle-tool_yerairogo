@@ -25,6 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['cachedef_entry'] = 'Tool entry';
 $string['completed'] = 'Completed';
 $string['confirmdeletion'] = 'Are you sure you want to delete this entry?';
 $string['coursename'] = 'Course: {$a}';

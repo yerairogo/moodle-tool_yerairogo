@@ -16,6 +16,7 @@
 
 namespace tool_yerairogo;
 
+use cache;
 use context_course;
 use core\exception\coding_exception;
 use stdClass;
@@ -38,11 +39,19 @@ class actions {
      */
     public static function get(int $id, int $courseid = 0, int $strictness = MUST_EXIST) {
         global $DB;
-        $conditions = ['id' => $id];
-        if ($courseid) {
-            $conditions['courseid'] = $courseid;
+
+        $cache = cache::make('tool_yerairogo', 'entry');
+        if (!$entry = $cache->get($id)) {
+            $conditions = ['id' => $id];
+            if ($courseid) {
+                $conditions['courseid'] = $courseid;
+            }
+
+            $entry = $DB->get_record('tool_yerairogo', $conditions, '*', $strictness);
+            $cache->set($entry->id, $entry);
         }
-        return $DB->get_record('tool_yerairogo', $conditions, '*', $strictness);
+
+        return $entry;
     }
 
     /**
@@ -104,6 +113,8 @@ class actions {
         }
 
         $DB->update_record('tool_yerairogo', $data);
+        $cache = cache::make('tool_yerairogo', 'entry');
+        $cache->set($data->id, $data);
 
         // Trigger event.
         $entry = self::get($data->id);
@@ -124,6 +135,8 @@ class actions {
             return;
         }
         $DB->delete_records("tool_yerairogo", ['id' => $id]);
+        $cache = cache::make('tool_yerairogo', 'entry');
+        $cache->delete($id);
 
         // Trigger event.
         $event = \tool_yerairogo\event\entry_deleted::create([

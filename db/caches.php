@@ -15,17 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for tool_yerairogo
+ * Cache definitions for My first Moodle plugin
+ *
+ * Documentation: {@link https://docs.moodle.org/dev/Cache_API}
  *
  * @package    tool_yerairogo
- * @copyright  2025 Yerai Rodríguez
+ * @category   cache
+ * @copyright  2025 Yerai Rodríguez <yerai.rodriguez@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'tool_yerairogo';
-$plugin->release = '2.7';
-$plugin->version = 2025081200;
-$plugin->requires = 2018050800;
-$plugin->maturity = MATURITY_STABLE;
+$definitions = [
+    // The entries stored in tool_yerairogo.
+    'entry' => [
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+    ],
+];
