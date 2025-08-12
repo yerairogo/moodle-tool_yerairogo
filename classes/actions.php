@@ -47,8 +47,9 @@ class actions {
                 $conditions['courseid'] = $courseid;
             }
 
-            $entry = $DB->get_record('tool_yerairogo', $conditions, '*', $strictness);
-            $cache->set($entry->id, $entry);
+            if ($entry = $DB->get_record('tool_yerairogo', $conditions, '*', $strictness)) {
+                $cache->set($entry->id, $entry);
+            }
         }
 
         return $entry;
@@ -113,11 +114,13 @@ class actions {
         }
 
         $DB->update_record('tool_yerairogo', $data);
+
         $cache = cache::make('tool_yerairogo', 'entry');
-        $cache->set($data->id, $data);
+        $cache->delete($data->id);
+        $entry = self::get($data->id);
+        $cache->set($data->id, $entry);
 
         // Trigger event.
-        $entry = self::get($data->id);
         $event = \tool_yerairogo\event\entry_updated::create([
             'context' => context_course::instance($entry->courseid),
             'objectid' => $entry->id,
