@@ -53,6 +53,7 @@ class entries_list implements templatable, renderable {
         $context = context_course::instance($this->courseid);
 
         $data = [];
+        $data['tooldescription'] = get_config('tool_yerairogo', 'listdescription');
         $data['courseid'] = $course->id;
         $data['coursename'] = format_string($course->fullname, true, ['context' => $context]);
 

@@ -15,17 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information for tool_yerairogo
+ * My first Moodle plugin settings.
  *
  * @package    tool_yerairogo
- * @copyright  2025 Yerai Rodríguez
+ * @copyright  2025 Yerai Rodríguez <yerai.rodriguez@moodle.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'tool_yerairogo';
-$plugin->release = '2.8';
-$plugin->version = 2025081201;
-$plugin->requires = 2018050800;
-$plugin->maturity = MATURITY_STABLE;
+if ($hassiteconfig) {
+    $settings = new admin_settingpage('tool_yerairogo', get_string('pluginname', 'tool_yerairogo'));
+    $ADMIN->add('tools', $settings);
+
+    $settings->add(new admin_setting_configtextarea(
+        'tool_yerairogo/listdescription',
+        new lang_string('listdescription', 'tool_yerairogo'),
+        new lang_string('listdescription_desc', 'tool_yerairogo'),
+        '', PARAM_TEXT
+    ));
+}

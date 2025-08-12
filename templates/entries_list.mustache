@@ -29,6 +29,7 @@
 
     Example context (json):
     {
+        "tooldescription": "Description of this tool"
         "courseid": 2,
         "coursename": "Test course",
         "entriestable": "List of entries",
@@ -39,6 +40,10 @@
 <div class="entries_list" data-courseid="{{courseid}}">
     <h2>{{#str}} title, tool_yerairogo {{/str}}</h2>
     <p>{{#str}} coursename, tool_yerairogo, {{{coursename}}} {{/str}}</p>
+
+    {{#tooldescription}}
+    <p>{{{.}}}</p>
+    {{/tooldescription}}
 
     {{{entriestable}}}
 
