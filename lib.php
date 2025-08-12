@@ -53,14 +53,7 @@ function tool_yerairogo_extend_navigation_course(navigation_node $parentnode, st
  * @param array $options additional options affecting the file serving
  * @return bool false if the file not found, just send the file otherwise and do not return anything
  */
-function tool_yerairogo_pluginfile(    $course,
-    $cm,
-    $context,
-    string $filearea,
-    array $args,
-    bool $forcedownload,
-    array $options
-    ): bool {
+function tool_yerairogo_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     if ($context->contextlevel != CONTEXT_MODULE) {
         return false;
     }

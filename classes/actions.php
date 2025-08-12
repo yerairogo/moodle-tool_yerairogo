@@ -40,7 +40,7 @@ class actions {
         global $DB;
         $conditions = ['id' => $id];
         if ($courseid) {
-            $params['courseid'] = $courseid;
+            $conditions['courseid'] = $courseid;
         }
         return $DB->get_record('tool_yerairogo', $conditions, '*', $strictness);
     }
@@ -58,9 +58,12 @@ class actions {
         }
 
         $context = context_course::instance($data->courseid);
-        $data->timecreated = time();
-        $data->timemodified = $data->timecreated;
-        $entryid = $DB->insert_record('tool_yerairogo', $data);
+
+        $insertdata = array_intersect_key((array) $data, [
+            'courseid' => 1, 'name' => 1, 'completed' => 1, 'priority' => 1, 'description' => 1, 'descriptionformat' => 1,
+        ]);
+        $insertdata['timemodified'] = $insertdata['timecreated'] = time();
+        $entryid = $DB->insert_record('tool_yerairogo', $insertdata);
 
         if (!empty($data->description_editor)) {
             $data = file_postupdate_standard_editor($data, 'description', self::editor_options(),

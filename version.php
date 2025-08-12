@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'tool_yerairogo';
-$plugin->release = '2.5';
-$plugin->version = 2025081103;
+$plugin->release = '2.6';
+$plugin->version = 2025081104;
 $plugin->requires = 2018050800;
 $plugin->maturity = MATURITY_STABLE;
