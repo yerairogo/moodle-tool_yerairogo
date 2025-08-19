@@ -40,12 +40,12 @@ export const confirmDeletion = (id, entriesList) => {
             {key: 'yes'},
             {key: 'no'}
         ])
-        .done(function(strings) {
-            notification.confirm(strings[0], strings[1], strings[2], strings[3], function() {
+        .then(function(strings) {
+            return notification.confirm(strings[0], strings[1], strings[2], strings[3], function() {
                 processDelete(id, entriesList);
             });
         })
-        .fail(notification.exception);
+        .catch(notification.exception);
 };
 
 /**
@@ -64,9 +64,9 @@ export const processDelete = (id, entriesList) => {
         methodname: 'tool_yerairogo_list_entries',
         args: {courseid: courseid}
     }]);
-    requests[1].done(function(data) {
-        loadList(data, entriesList);
-    }).fail(notification.exception);
+    requests[1].then(function(data) {
+        return loadList(data, entriesList);
+    }).catch(notification.exception);
 };
 
 /**
@@ -77,9 +77,9 @@ export const processDelete = (id, entriesList) => {
  * @param {Object} entriesList
  */
 export const loadList = (data, entriesList) => {
-    templates.render('tool_yerairogo/entries_list', data).done(function(html, js) {
-        templates.replaceNodeContents(entriesList, html, js);
-    });
+    templates.render('tool_yerairogo/entries_list', data).then(function(html, js) {
+        return templates.replaceNodeContents(entriesList, html, js);
+    }).catch(notification.exception);
 };
 
 /**

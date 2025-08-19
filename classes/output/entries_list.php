@@ -18,7 +18,6 @@ namespace tool_yerairogo\output;
 
 use context_course;
 use moodle_url;
-use stdClass;
 use templatable;
 use renderable;
 use tool_yerairogo_table;

@@ -29,16 +29,14 @@ defined('MOODLE_INTERNAL') || die();
 
 $functions = [
     'tool_yerairogo_delete_entry' => [
-        'classname' => \tool_yerairogo\external::class,
-        'methodname' => 'delete_entry',
+        'classname' => 'tool_yerairogo\external\delete_entry',
         'description' => 'Delete entry',
         'type' => 'write',
         'ajax' => true,
         'capabilities' => 'tool/yerairogo:edit',
     ],
      'tool_yerairogo_list_entries' => [
-        'classname' => \tool_yerairogo\external::class,
-        'methodname' => 'list_entries',
+        'classname' => 'tool_yerairogo\external\list_entries',
         'description' => 'List entries',
         'type' => 'read',
         'ajax' => true,
