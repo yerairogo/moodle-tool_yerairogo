@@ -34,7 +34,7 @@ $url = new moodle_url('/admin/tool/yerairogo/index.php', ['id' => $courseid]);
 $PAGE->set_context($coursecontext);
 $PAGE->set_url($url);
 $PAGE->set_pagelayout('report');
-$PAGE->set_title('Hello to yerairogo plugin');
+$PAGE->set_title(get_string('title', 'tool_yerairogo'));
 $PAGE->set_heading(get_string('pluginname', 'tool_yerairogo'));
 
 $course = $DB->get_record('course', ['id' => $courseid]);
