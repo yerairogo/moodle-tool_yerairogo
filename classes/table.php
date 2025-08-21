@@ -143,8 +143,9 @@ class tool_yerairogo_table extends table_sql {
         $editurl = new moodle_url('/admin/tool/yerairogo/edit.php', ['id' => $row->id]);
         $deleteurl = new moodle_url('/admin/tool/yerairogo/delete.php', ['id' => $row->id, 'sesskey' => sesskey()]);
         $output = html_writer::link($editurl,
-            get_string('edit') . '<br>',
+            get_string('edit'),
             ['title' => get_string('editentrytitle', 'tool_yerairogo', format_string($row->name))]);
+        $output .= html_writer::empty_tag('br');
         $output .= html_writer::link($deleteurl, get_string('delete'), [
             'data-action' => 'deleteentry',
             'data-entryid' => $row->id,
