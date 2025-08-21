@@ -106,25 +106,25 @@ final class actions_test extends advanced_testcase {
         $this->setAdminUser();
         $course = $this->getDataGenerator()->create_course();
         $entryid = actions::insert((object) [
-         'courseid' => $course->id,
-         'name' => 'Test entry 1',
-         'description_editor' => [
-             'text' => 'Description in HTML',
-             'format' => FORMAT_HTML,
-             'itemid' => file_get_unused_draft_itemid(),
-         ],
+            'courseid' => $course->id,
+            'name' => 'Test entry 1',
+            'description_editor' => [
+                'text' => 'Description in HTML',
+                'format' => FORMAT_HTML,
+                'itemid' => file_get_unused_draft_itemid(),
+            ],
         ]);
         $entry = actions::get($entryid);
         $this->assertEquals('Description in HTML', $entry->description);
 
         actions::update((object) [
-         'id' => $entryid,
-         'name' => 'Test entry 2',
-         'description_editor' => [
-             'text' => 'Updated description',
-             'format' => FORMAT_HTML,
-             'itemid' => file_get_unused_draft_itemid(),
-         ],
+            'id' => $entryid,
+            'name' => 'Test entry 2',
+            'description_editor' => [
+                'text' => 'Updated description',
+                'format' => FORMAT_HTML,
+                'itemid' => file_get_unused_draft_itemid(),
+            ],
         ]);
         $entry = actions::get($entryid);
 
